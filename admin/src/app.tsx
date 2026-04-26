@@ -14,7 +14,9 @@ import plI18n from './i18n/pl.json';
 import ukI18n from './i18n/uk.json';
 import zhCnI18n from './i18n/zh-cn.json';
 
+/** Root application component. */
 class App extends GenericApp {
+    /** @inheritdoc */
     constructor(props: GenericAppProps) {
         const extendedProps: GenericAppSettings = {
             ...props,
@@ -36,10 +38,12 @@ class App extends GenericApp {
         super(props, extendedProps);
     }
 
+    /** @inheritdoc */
     onConnectionReady(): void {
         // executed when connection is ready
     }
 
+    /** @inheritdoc */
     render(): React.JSX.Element {
         if (!this.state.loaded) {
             return super.render();

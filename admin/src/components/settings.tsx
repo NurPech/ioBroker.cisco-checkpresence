@@ -28,7 +28,9 @@ interface SettingsState {
     tab: number;
 }
 
+/** Settings component — connection and user mapping configuration. */
 class Settings extends React.Component<SettingsProps, SettingsState> {
+    /** @inheritdoc */
     constructor(props: SettingsProps) {
         super(props);
         this.state = { tab: 0 };
@@ -187,6 +189,7 @@ class Settings extends React.Component<SettingsProps, SettingsState> {
         );
     }
 
+    /** @inheritdoc */
     render(): React.JSX.Element {
         return (
             <Box>

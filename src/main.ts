@@ -57,7 +57,9 @@ class CiscoCheckpresence extends utils.Adapter {
         });
 
         for (const user of users) {
-            if (!user.stateName) { continue; }
+            if (!user.stateName) {
+                continue;
+            }
             await this.setObjectNotExistsAsync(`presence.${user.stateName}`, {
                 type: 'channel',
                 common: { name: user.username },
@@ -152,7 +154,9 @@ class CiscoCheckpresence extends utils.Adapter {
 
             const users = Array.isArray(this.config.users) ? this.config.users : [];
             for (const user of users) {
-                if (!user.stateName || !user.username) { continue; }
+                if (!user.stateName || !user.username) {
+                    continue;
+                }
                 const client = enriched.find((c) => c.username === user.username && c.connected);
                 const present = !!client;
 
@@ -247,8 +251,12 @@ class CiscoCheckpresence extends utils.Adapter {
     }
 
     private parseBand(radioType: string): string {
-        if (radioType.includes('24-ghz') || radioType.includes('bg')) { return '2.4 GHz'; }
-        if (radioType.includes('6-ghz')) { return '6 GHz'; }
+        if (radioType.includes('24-ghz') || radioType.includes('bg')) {
+            return '2.4 GHz';
+        }
+        if (radioType.includes('6-ghz')) {
+            return '6 GHz';
+        }
         if (radioType.includes('5-ghz') || radioType.includes('ac') || radioType.includes('ax')) {
             return '5 GHz';
         }
