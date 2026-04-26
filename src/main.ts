@@ -18,7 +18,7 @@ interface TrafficStats {
 }
 
 class CiscoCheckpresence extends utils.Adapter {
-    private pollTimer: ReturnType<typeof setInterval> | null = null;
+    private pollTimer: ioBroker.Interval | undefined = undefined;
     private absentCount: Map<string, number> = new Map();
 
     public constructor(options: Partial<utils.AdapterOptions> = {}) {
@@ -33,7 +33,7 @@ class CiscoCheckpresence extends utils.Adapter {
     private async onReady(): Promise<void> {
         if (!this.config.wlcHost || !this.config.wlcUser || !this.config.wlcPassword) {
             this.log.warn(
-                'WLC-Konfiguration unvollständig — bitte Host, Benutzername und Passwort eintragen.',
+                'WLC configuration is incomplete. Please provide host, username, and password.',
             );
             await this.setState('info.connection', false, true);
             return;
@@ -41,13 +41,13 @@ class CiscoCheckpresence extends utils.Adapter {
 
         const users = Array.isArray(this.config.users) ? this.config.users : [];
         if (users.length === 0) {
-            this.log.warn('Keine Benutzer konfiguriert — bitte mindestens einen Benutzer anlegen.');
+            this.log.warn('No users configured — please add at least one user.');
         }
 
         await this.setObjectNotExistsAsync('info.connection', {
             type: 'state',
             common: {
-                name: 'WLC verbunden',
+                name: 'WLC connected',
                 type: 'boolean',
                 role: 'indicator.connected',
                 read: true,
@@ -69,7 +69,7 @@ class CiscoCheckpresence extends utils.Adapter {
             await this.setObjectNotExistsAsync(`presence.${user.stateName}.present`, {
                 type: 'state',
                 common: {
-                    name: 'Anwesend',
+                    name: 'Presence',
                     type: 'boolean',
                     role: 'indicator.presence',
                     read: true,
@@ -93,7 +93,7 @@ class CiscoCheckpresence extends utils.Adapter {
             await this.setObjectNotExistsAsync(`presence.${user.stateName}.band`, {
                 type: 'state',
                 common: {
-                    name: 'Frequenzband',
+                    name: 'Frequency band',
                     type: 'string',
                     role: 'text',
                     read: true,
@@ -133,8 +133,12 @@ class CiscoCheckpresence extends utils.Adapter {
         await this.poll();
 
         const intervalMs = Math.max(10, this.config.pollInterval || 30) * 1000;
-        this.pollTimer = setInterval(() => this.poll(), intervalMs);
-        this.log.info(`Gestartet. WLC: ${this.config.wlcHost}, Intervall: ${intervalMs / 1000}s`);
+        this.pollTimer = this.setInterval(() => {
+            void this.poll();
+        }, intervalMs);
+        this.log.info(
+            `Service started. WLC Host: ${this.config.wlcHost}, Polling Interval: ${intervalMs / 1000}s`,
+        );
     }
 
     private async poll(): Promise<void> {
@@ -170,7 +174,7 @@ class CiscoCheckpresence extends utils.Adapter {
                     this.absentCount.set(user.stateName, count);
                     present = count < absentThreshold;
                     if (!present) {
-                        this.log.debug(`${user.username}: ${count}× nicht gesehen → abwesend`);
+                        this.log.debug(`${user.username}: Not seen ${count}× → absent`);
                     }
                 }
 
@@ -181,11 +185,11 @@ class CiscoCheckpresence extends utils.Adapter {
                 await this.setState(`presence.${user.stateName}.snr`, client?.snr ?? 0, true);
 
                 this.log.debug(
-                    `${user.username} → ${present ? `anwesend (${client?.ap}, ${client?.band}, ${client?.rssi} dBm)` : 'abwesend'}`,
+                    `${user.username} → ${present ? `home (${client?.ap}, ${client?.band}, ${client?.rssi} dBm)` : 'away'}`,
                 );
             }
         } catch (err) {
-            this.log.error(`Poll fehlgeschlagen: ${(err as Error).message}`);
+            this.log.error(`Failed to poll WLC: ${(err as Error).message}`);
             await this.setState('info.connection', false, true);
         }
     }
@@ -242,14 +246,14 @@ class CiscoCheckpresence extends utils.Adapter {
                     res.on('data', (chunk) => (data += chunk));
                     res.on('end', () => {
                         if (res.statusCode !== 200) {
-                            reject(new Error(`HTTP ${res.statusCode} für ${path}`));
+                            reject(new Error(`HTTP ${res.statusCode} for ${path}`));
                             return;
                         }
                         try {
                             const parsed = JSON.parse(data);
                             resolve((parsed[key] ?? []) as T);
                         } catch (e) {
-                            reject(new Error(`JSON-Parse fehlgeschlagen: ${(e as Error).message}`));
+                            reject(new Error(`Failed to parse JSON: ${(e as Error).message}`));
                         }
                     });
                 },
@@ -258,7 +262,7 @@ class CiscoCheckpresence extends utils.Adapter {
             req.on('error', reject);
             req.on('timeout', () => {
                 req.destroy();
-                reject(new Error(`Timeout für ${path}`));
+                reject(new Error(`Connection timed out for ${path}`));
             });
             req.end();
         });
@@ -279,13 +283,12 @@ class CiscoCheckpresence extends utils.Adapter {
 
     private onUnload(callback: () => void): void {
         try {
-            if (this.pollTimer) {
-                clearInterval(this.pollTimer);
-                this.pollTimer = null;
-            }
+            this.clearInterval(this.pollTimer);
+            this.pollTimer = undefined;
+
             callback();
         } catch (error) {
-            this.log.error(`Fehler beim Beenden: ${(error as Error).message}`);
+            this.log.error(`Error during shutdown: ${(error as Error).message}`);
             callback();
         }
     }
