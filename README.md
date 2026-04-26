@@ -70,6 +70,8 @@ cisco-checkpresence.0.presence.leonie.present
 
 ## Changelog
 
+### **WORK IN PROGRESS**
+
 ### 0.0.1 (2026-04-26)
 - Initial release
 - Presence detection via RESTCONF (`common-oper-data`)
