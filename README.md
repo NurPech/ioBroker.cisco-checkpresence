@@ -71,6 +71,7 @@ cisco-checkpresence.0.presence.leonie.present
 ## Changelog
 
 ### **WORK IN PROGRESS**
+* (M1kad0) added absent threshold to debounce presence detection
 
 ### 0.0.1 (2026-04-26)
 - Initial release
