@@ -41,7 +41,7 @@
     "@mui/material": "^6.5.0",
     "@tsconfig/node20": "^20.1.9",
     "@types/iobroker": "npm:@iobroker/types@^7.1.1",
-    "@types/node": "^20.19.39",
+    "@types/node": "^25.6.0",
     "@types/react": "^18.3.23",
     "@types/react-dom": "^18.3.7",
     "react": "^18.3.1",
