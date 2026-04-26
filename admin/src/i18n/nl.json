@@ -1,8 +1,11 @@
 {
     "802.1X Username": "802.1X gebruikersnaam",
+    "Absent threshold": "Afwezigheidsdrempel (peilingen)",
     "Add user": "Gebruiker toevoegen",
+    "Connection": "Verbinding",
     "Ignore self-signed certificate": "Zelfondertekend certificaat negeren (aanbevolen)",
     "Poll Interval": "Poll-interval (seconden)",
+    "Polls until absent": "Opeenvolgende peilingen zonder cliënt alvorens als afwezig te markeren",
     "Remove": "Verwijderen",
     "State Name": "Geef de naam op in ioBroker",
     "User Mapping": "Gebruikerstoewijzing (802.1X gebruikersnaam → statusnaam)",

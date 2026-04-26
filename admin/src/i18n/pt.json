@@ -1,8 +1,11 @@
 {
     "802.1X Username": "Nome de usuário 802.1X",
+    "Absent threshold": "Limite de ausência (sondagens)",
     "Add user": "Adicionar usuário",
+    "Connection": "Conexão",
     "Ignore self-signed certificate": "Ignorar certificado autoassinado (recomendado)",
     "Poll Interval": "Intervalo de pesquisa (segundos)",
+    "Polls until absent": "Enquetes consecutivas sem cliente antes de marcar como ausente",
     "Remove": "Remover",
     "State Name": "Nome do estado no ioBroker",
     "User Mapping": "Mapeamento de usuário (nome de usuário 802.1X → nome do estado)",

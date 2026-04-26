@@ -10,5 +10,7 @@
     "802.1X Username": "802.1X Username",
     "State Name": "State name in ioBroker",
     "Add user": "Add user",
-    "Remove": "Remove"
+    "Remove": "Remove",
+    "Absent threshold": "Absent threshold (polls)",
+    "Polls until absent": "Consecutive polls without client before marking absent"
 }

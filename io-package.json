@@ -78,7 +78,7 @@
         ],
         "globalDependencies": [
             {
-                "admin": ">=7.0.23"
+                "admin": ">=7.6.20"
             }
         ]
     },
@@ -87,10 +87,16 @@
         "wlcUser": "",
         "wlcPassword": "",
         "pollInterval": 30,
+        "absentThreshold": 2,
         "ignoreSelfSignedCert": true,
         "users": []
     },
-    "encryptedNative": ["wlcPassword"],
+    "encryptedNative": [
+        "wlcPassword"
+    ],
+    "protectedNative": [
+        "wlcPassword"
+    ],
     "objects": [],
     "instanceObjects": []
 }

@@ -25,6 +25,7 @@ var utils = __toESM(require("@iobroker/adapter-core"));
 var https = __toESM(require("https"));
 class CiscoCheckpresence extends utils.Adapter {
   pollTimer = null;
+  absentCount = /* @__PURE__ */ new Map();
   constructor(options = {}) {
     super({
       ...options,
@@ -58,7 +59,9 @@ class CiscoCheckpresence extends utils.Adapter {
       native: {}
     });
     for (const user of users) {
-      if (!user.stateName) continue;
+      if (!user.stateName) {
+        continue;
+      }
       await this.setObjectNotExistsAsync(`presence.${user.stateName}`, {
         type: "channel",
         common: { name: user.username },
@@ -133,7 +136,7 @@ class CiscoCheckpresence extends utils.Adapter {
     this.log.info(`Gestartet. WLC: ${this.config.wlcHost}, Intervall: ${intervalMs / 1e3}s`);
   }
   async poll() {
-    var _a, _b, _c, _d;
+    var _a, _b, _c, _d, _e;
     try {
       const [clients, stats] = await Promise.all([
         this.fetchClients(),
@@ -151,16 +154,30 @@ class CiscoCheckpresence extends utils.Adapter {
       await this.setState("info.connection", true, true);
       const users = Array.isArray(this.config.users) ? this.config.users : [];
       for (const user of users) {
-        if (!user.stateName || !user.username) continue;
+        if (!user.stateName || !user.username) {
+          continue;
+        }
         const client = enriched.find((c) => c.username === user.username && c.connected);
-        const present = !!client;
+        const absentThreshold = Math.max(1, this.config.absentThreshold || 2);
+        let present;
+        if (client) {
+          this.absentCount.set(user.stateName, 0);
+          present = true;
+        } else {
+          const count = ((_a = this.absentCount.get(user.stateName)) != null ? _a : 0) + 1;
+          this.absentCount.set(user.stateName, count);
+          present = count < absentThreshold;
+          if (!present) {
+            this.log.debug(`${user.username}: ${count}\xD7 nicht gesehen \u2192 abwesend`);
+          }
+        }
         await this.setState(`presence.${user.stateName}.present`, present, true);
-        await this.setState(`presence.${user.stateName}.ap`, (_a = client == null ? void 0 : client.ap) != null ? _a : "", true);
-        await this.setState(`presence.${user.stateName}.band`, (_b = client == null ? void 0 : client.band) != null ? _b : "", true);
-        await this.setState(`presence.${user.stateName}.rssi`, (_c = client == null ? void 0 : client.rssi) != null ? _c : 0, true);
-        await this.setState(`presence.${user.stateName}.snr`, (_d = client == null ? void 0 : client.snr) != null ? _d : 0, true);
+        await this.setState(`presence.${user.stateName}.ap`, (_b = client == null ? void 0 : client.ap) != null ? _b : "", true);
+        await this.setState(`presence.${user.stateName}.band`, (_c = client == null ? void 0 : client.band) != null ? _c : "", true);
+        await this.setState(`presence.${user.stateName}.rssi`, (_d = client == null ? void 0 : client.rssi) != null ? _d : 0, true);
+        await this.setState(`presence.${user.stateName}.snr`, (_e = client == null ? void 0 : client.snr) != null ? _e : 0, true);
         this.log.debug(
-          `${user.username} \u2192 ${present ? `anwesend (${client.ap}, ${client.band}, ${client.rssi} dBm)` : "abwesend"}`
+          `${user.username} \u2192 ${present ? `anwesend (${client == null ? void 0 : client.ap}, ${client == null ? void 0 : client.band}, ${client == null ? void 0 : client.rssi} dBm)` : "abwesend"}`
         );
       }
     } catch (err) {
@@ -202,9 +219,9 @@ class CiscoCheckpresence extends utils.Adapter {
   }
   restconfGet(path, key) {
     return new Promise((resolve, reject) => {
-      const auth = Buffer.from(
-        `${this.config.wlcUser}:${this.config.wlcPassword}`
-      ).toString("base64");
+      const auth = Buffer.from(`${this.config.wlcUser}:${this.config.wlcPassword}`).toString(
+        "base64"
+      );
       const req = https.request(
         {
           hostname: this.config.wlcHost,
@@ -231,9 +248,7 @@ class CiscoCheckpresence extends utils.Adapter {
               const parsed = JSON.parse(data);
               resolve((_a = parsed[key]) != null ? _a : []);
             } catch (e) {
-              reject(
-                new Error(`JSON-Parse fehlgeschlagen: ${e.message}`)
-              );
+              reject(new Error(`JSON-Parse fehlgeschlagen: ${e.message}`));
             }
           });
         }
@@ -247,10 +262,15 @@ class CiscoCheckpresence extends utils.Adapter {
     });
   }
   parseBand(radioType) {
-    if (radioType.includes("24-ghz") || radioType.includes("bg")) return "2.4 GHz";
-    if (radioType.includes("6-ghz")) return "6 GHz";
-    if (radioType.includes("5-ghz") || radioType.includes("ac") || radioType.includes("ax"))
+    if (radioType.includes("24-ghz") || radioType.includes("bg")) {
+      return "2.4 GHz";
+    }
+    if (radioType.includes("6-ghz")) {
+      return "6 GHz";
+    }
+    if (radioType.includes("5-ghz") || radioType.includes("ac") || radioType.includes("ax")) {
       return "5 GHz";
+    }
     return radioType;
   }
   onUnload(callback) {

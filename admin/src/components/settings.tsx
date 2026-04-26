@@ -83,6 +83,17 @@ class Settings extends React.Component<SettingsProps, SettingsState> {
                         helperText="10 – 300 s"
                         sx={{ width: 130 }}
                     />
+                    <TextField
+                        label={I18n.t('Absent threshold')}
+                        value={native.absentThreshold ?? 2}
+                        type="number"
+                        onChange={(e) => onChange('absentThreshold', parseInt(e.target.value) || 2)}
+                        variant="outlined"
+                        size="small"
+                        slotProps={{ htmlInput: { min: 1, max: 10 } }}
+                        helperText={I18n.t('Polls until absent')}
+                        sx={{ width: 160 }}
+                    />
                 </Box>
                 <Box sx={{ display: 'flex', gap: 3, flexWrap: 'wrap', mb: 3 }}>
                     <TextField
