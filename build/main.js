@@ -35,7 +35,9 @@ class CiscoCheckpresence extends utils.Adapter {
   }
   async onReady() {
     if (!this.config.wlcHost || !this.config.wlcUser || !this.config.wlcPassword) {
-      this.log.warn("WLC-Konfiguration unvollst\xE4ndig \u2014 bitte Host, Benutzername und Passwort eintragen.");
+      this.log.warn(
+        "WLC-Konfiguration unvollst\xE4ndig \u2014 bitte Host, Benutzername und Passwort eintragen."
+      );
       await this.setState("info.connection", false, true);
       return;
     }
@@ -56,7 +58,9 @@ class CiscoCheckpresence extends utils.Adapter {
       native: {}
     });
     for (const user of users) {
-      if (!user.stateName) continue;
+      if (!user.stateName) {
+        continue;
+      }
       await this.setObjectNotExistsAsync(`presence.${user.stateName}`, {
         type: "state",
         common: {
@@ -81,7 +85,9 @@ class CiscoCheckpresence extends utils.Adapter {
       await this.setState("info.connection", true, true);
       const users = Array.isArray(this.config.users) ? this.config.users : [];
       for (const user of users) {
-        if (!user.stateName || !user.username) continue;
+        if (!user.stateName || !user.username) {
+          continue;
+        }
         const present = clients.some((c) => c.username === user.username && c.connected);
         await this.setState(`presence.${user.stateName}`, present, true);
         this.log.debug(`${user.username} \u2192 ${present ? "anwesend" : "abwesend"}`);
@@ -93,7 +99,9 @@ class CiscoCheckpresence extends utils.Adapter {
   }
   fetchClients() {
     return new Promise((resolve, reject) => {
-      const auth = Buffer.from(`${this.config.wlcUser}:${this.config.wlcPassword}`).toString("base64");
+      const auth = Buffer.from(`${this.config.wlcUser}:${this.config.wlcPassword}`).toString(
+        "base64"
+      );
       const req = https.request(
         {
           hostname: this.config.wlcHost,

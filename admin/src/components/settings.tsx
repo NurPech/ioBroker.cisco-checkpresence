@@ -64,7 +64,7 @@ class Settings extends React.Component<SettingsProps, SettingsState> {
                     <TextField
                         label={I18n.t('WLC Host')}
                         value={native.wlcHost || ''}
-                        onChange={e => onChange('wlcHost', e.target.value)}
+                        onChange={(e) => onChange('wlcHost', e.target.value)}
                         variant="outlined"
                         size="small"
                         placeholder="10.0.21.11"
@@ -74,7 +74,7 @@ class Settings extends React.Component<SettingsProps, SettingsState> {
                         label="Intervall (s)"
                         value={native.pollInterval ?? 30}
                         type="number"
-                        onChange={e => onChange('pollInterval', parseInt(e.target.value) || 30)}
+                        onChange={(e) => onChange('pollInterval', parseInt(e.target.value) || 30)}
                         variant="outlined"
                         size="small"
                         slotProps={{ htmlInput: { min: 10, max: 300 } }}
@@ -86,7 +86,7 @@ class Settings extends React.Component<SettingsProps, SettingsState> {
                     <TextField
                         label={I18n.t('WLC Username')}
                         value={native.wlcUser || ''}
-                        onChange={e => onChange('wlcUser', e.target.value)}
+                        onChange={(e) => onChange('wlcUser', e.target.value)}
                         variant="outlined"
                         size="small"
                         autoComplete="off"
@@ -96,7 +96,7 @@ class Settings extends React.Component<SettingsProps, SettingsState> {
                         label={I18n.t('WLC Password')}
                         value={native.wlcPassword || ''}
                         type="password"
-                        onChange={e => onChange('wlcPassword', e.target.value)}
+                        onChange={(e) => onChange('wlcPassword', e.target.value)}
                         variant="outlined"
                         size="small"
                         autoComplete="new-password"
@@ -108,7 +108,9 @@ class Settings extends React.Component<SettingsProps, SettingsState> {
                     control={
                         <Checkbox
                             checked={native.ignoreSelfSignedCert !== false}
-                            onChange={() => onChange('ignoreSelfSignedCert', !native.ignoreSelfSignedCert)}
+                            onChange={() =>
+                                onChange('ignoreSelfSignedCert', !native.ignoreSelfSignedCert)
+                            }
                             color="primary"
                         />
                     }
@@ -137,7 +139,9 @@ class Settings extends React.Component<SettingsProps, SettingsState> {
                                     <TableCell>
                                         <TextField
                                             value={user.username}
-                                            onChange={e => this.updateUser(index, 'username', e.target.value)}
+                                            onChange={(e) =>
+                                                this.updateUser(index, 'username', e.target.value)
+                                            }
                                             placeholder="leonie"
                                             variant="outlined"
                                             size="small"
@@ -147,7 +151,9 @@ class Settings extends React.Component<SettingsProps, SettingsState> {
                                     <TableCell>
                                         <TextField
                                             value={user.stateName}
-                                            onChange={e => this.updateUser(index, 'stateName', e.target.value)}
+                                            onChange={(e) =>
+                                                this.updateUser(index, 'stateName', e.target.value)
+                                            }
                                             placeholder="leonie"
                                             variant="outlined"
                                             size="small"
@@ -184,10 +190,7 @@ class Settings extends React.Component<SettingsProps, SettingsState> {
     render(): React.JSX.Element {
         return (
             <Box>
-                <Tabs
-                    value={this.state.tab}
-                    onChange={(_e, v) => this.setState({ tab: v })}
-                >
+                <Tabs value={this.state.tab} onChange={(_e, v) => this.setState({ tab: v })}>
                     <Tab label="Verbindung" />
                     <Tab label="Benutzer" />
                 </Tabs>

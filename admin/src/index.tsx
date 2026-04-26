@@ -9,7 +9,9 @@ let themeName = Utils.getThemeName();
 
 function build(): void {
     const container = document.getElementById('root');
-    if (!container) return;
+    if (!container) {
+        return;
+    }
     const root = createRoot(container);
     root.render(
         <StyledEngineProvider injectFirst>

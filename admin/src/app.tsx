@@ -1,7 +1,18 @@
 import React from 'react';
-import { GenericApp, I18n } from '@iobroker/adapter-react-v5';
+import { GenericApp } from '@iobroker/adapter-react-v5';
 import type { GenericAppProps, GenericAppSettings } from '@iobroker/adapter-react-v5';
 import Settings from './components/settings';
+import enI18n from './i18n/en.json';
+import deI18n from './i18n/de.json';
+import ruI18n from './i18n/ru.json';
+import ptI18n from './i18n/pt.json';
+import nlI18n from './i18n/nl.json';
+import frI18n from './i18n/fr.json';
+import itI18n from './i18n/it.json';
+import esI18n from './i18n/es.json';
+import plI18n from './i18n/pl.json';
+import ukI18n from './i18n/uk.json';
+import zhCnI18n from './i18n/zh-cn.json';
 
 class App extends GenericApp {
     constructor(props: GenericAppProps) {
@@ -9,16 +20,17 @@ class App extends GenericApp {
             ...props,
             encryptedFields: ['wlcPassword'],
             translations: {
-                en: require('./i18n/en.json'),
-                de: require('./i18n/de.json'),
-                ru: require('./i18n/ru.json'),
-                pt: require('./i18n/pt.json'),
-                nl: require('./i18n/nl.json'),
-                fr: require('./i18n/fr.json'),
-                it: require('./i18n/it.json'),
-                es: require('./i18n/es.json'),
-                pl: require('./i18n/pl.json'),
-                'zh-cn': require('./i18n/zh-cn.json'),
+                en: enI18n,
+                de: deI18n,
+                ru: ruI18n,
+                pt: ptI18n,
+                nl: nlI18n,
+                fr: frI18n,
+                it: itI18n,
+                es: esI18n,
+                pl: plI18n,
+                uk: ukI18n,
+                'zh-cn': zhCnI18n,
             },
         };
         super(props, extendedProps);
