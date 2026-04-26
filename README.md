@@ -4,128 +4,81 @@
 [![NPM version](https://img.shields.io/npm/v/iobroker.cisco-checkpresence.svg)](https://www.npmjs.com/package/iobroker.cisco-checkpresence)
 [![Downloads](https://img.shields.io/npm/dm/iobroker.cisco-checkpresence.svg)](https://www.npmjs.com/package/iobroker.cisco-checkpresence)
 ![Number of Installations](https://iobroker.live/badges/cisco-checkpresence-installed.svg)
-![Current version in stable repository](https://iobroker.live/badges/cisco-checkpresence-stable.svg)
-
-[![NPM](https://nodei.co/npm/iobroker.cisco-checkpresence.png?downloads=true)](https://nodei.co/npm/iobroker.cisco-checkpresence/)
 
 **Tests:** ![Test and Release](https://github.com/NurPech/ioBroker.cisco-checkpresence/workflows/Test%20and%20Release/badge.svg)
 
-## cisco-checkpresence adapter for ioBroker
+## Cisco Catalyst 9800 CheckPresence adapter for ioBroker
 
-The adapter checks the presence of family members over the Cisco Catalyst 9800 Wireless Controller
+Detects the presence of family members by querying the Cisco Catalyst 9800 Wireless Controller via RESTCONF. Instead of unreliable ping checks, the adapter reads the authenticated client table directly from the WLC — if the controller says a device is associated, it is there.
 
-## Developer manual
-This section is intended for the developer. It can be deleted later.
+## Requirements
 
-### DISCLAIMER
+- Cisco Catalyst 9800 Series Wireless Controller (9800-L, 9800-CL, 9800-40, 9800-80)
+- **802.1X authentication** is required. The adapter identifies clients by their 802.1X username. No external RADIUS server is needed — Local EAP on the WLC is sufficient.
+- A WLC user account with RESTCONF read access
+- ioBroker with js-controller ≥ 6.0.11 and Admin ≥ 7.0.23
 
-Please make sure that you consider copyrights and trademarks when you use names or logos of a company and add a disclaimer to your README.
-You can check other adapters for examples or ask in the developer community. Using a name or logo of a company without permission may cause legal problems for you.
+## Configuration
 
-### Getting started
+Open the adapter settings in ioBroker Admin.
 
-You are almost done, only a few steps left:
-1. Create a new repository on GitHub with the name `ioBroker.cisco-checkpresence`
-1. Initialize the current folder as a new git repository:  
-    ```bash
-    git init -b main
-    git add .
-    git commit -m "Initial commit"
-    ```
-1. Link your local repository with the one on GitHub:  
-    ```bash
-    git remote add origin https://github.com/NurPech/ioBroker.cisco-checkpresence
-    ```
+### Connection tab
 
-1. Push all files to the GitHub repo:  
-    ```bash
-    git push origin main
-    ```
-1. Add a new secret under https://github.com/NurPech/ioBroker.cisco-checkpresence/settings/secrets. It must be named `AUTO_MERGE_TOKEN` and contain a personal access token with push access to the repository, e.g. yours. You can create a new token under https://github.com/settings/tokens.
+| Field | Description |
+|-------|-------------|
+| WLC Host / IP Address | IP address or hostname of the Catalyst 9800 WLC |
+| Username | RESTCONF username (e.g. `iobroker_bot`) |
+| Password | RESTCONF password (stored encrypted) |
+| Interval (s) | Poll interval in seconds (10–300, default: 30) |
+| Ignore self-signed certificate | Enable if your WLC uses a self-signed TLS certificate (recommended) |
 
-1. Head over to [src/main.ts](src/main.ts) and start programming!
+### Users tab
 
-### Best Practices
-We've collected some [best practices](https://github.com/ioBroker/ioBroker.repositories#development-and-coding-best-practices) regarding ioBroker development and coding in general. If you're new to ioBroker or Node.js, you should
-check them out. If you're already experienced, you should also take a look at them - you might learn something new :)
+Map 802.1X usernames to state names in ioBroker:
 
-### State Roles
-When creating state objects, it is important to use the correct role for the state. The role defines how the state should be interpreted by visualizations and other adapters. For a list of available roles and their meanings, please refer to the [state roles documentation](https://www.iobroker.net/#en/documentation/dev/stateroles.md).
+| Field | Description |
+|-------|-------------|
+| 802.1X Username | The username as seen in the WLC client table |
+| State Name | Name used for the state under `presence.<name>` |
 
-**Important:** Do not invent your own custom role names. If you need a role that is not part of the official list, please contact the ioBroker developer community for guidance and discussion about adding new roles.
+## States
 
-### Scripts in `package.json`
-Several npm scripts are predefined for your convenience. You can run them using `npm run <scriptname>`
-| Script name | Description |
-|-------------|-------------|
-| `build` | Compile the TypeScript and React sources. |
-| `watch` | Compile the TypeScript and React sources and watch for changes. |
-| `build:ts` | Compile the TypeScript sources. |
-| `watch:ts` | Compile the TypeScript sources and watch for changes. |
-| `build:react` | Compile the React sources. |
-| `watch:react` | Compile the React sources and watch for changes. |
-| `test:ts` | Executes the tests you defined in `*.test.ts` files. |
-| `test:package` | Ensures your `package.json` and `io-package.json` are valid. |
-| `test:integration` | Tests the adapter startup with an actual instance of ioBroker. |
-| `test` | Performs a minimal test run on package files and your tests. |
-| `check` | Performs a type-check on your code (without compiling anything). |
-| `lint` | Runs `ESLint` to check your code for formatting errors and potential bugs. |
-| `translate` | Translates texts in your adapter to all required languages, see [`@iobroker/adapter-dev`](https://github.com/ioBroker/adapter-dev#manage-translations) for more details. |
-| `release` | Creates a new release, see [`@alcalzone/release-script`](https://github.com/AlCalzone/release-script#usage) for more details. |
+For each configured user the adapter creates the following states:
 
-### Configuring the compilation
-The adapter template uses [esbuild](https://esbuild.github.io/) to compile TypeScript and/or React code. You can configure many compilation settings 
-either in `tsconfig.json` or by changing options for the build tasks. These options are described in detail in the
-[`@iobroker/adapter-dev` documentation](https://github.com/ioBroker/adapter-dev#compile-adapter-files).
+| State | Type | Description |
+|-------|------|-------------|
+| `presence.<name>.present` | boolean | `true` if the client is currently associated |
+| `presence.<name>.ap` | string | Name of the associated Access Point (e.g. `AP03n`) |
+| `presence.<name>.band` | string | Radio band (`2.4 GHz`, `5 GHz`, or `6 GHz`) |
+| `presence.<name>.rssi` | number (dBm) | Received signal strength |
+| `presence.<name>.snr` | number (dB) | Signal-to-noise ratio |
+| `info.connection` | boolean | `true` if the WLC is reachable |
 
-### Writing tests
-When done right, testing code is invaluable, because it gives you the 
-confidence to change your code while knowing exactly if and when 
-something breaks. A good read on the topic of test-driven development 
-is https://hackernoon.com/introduction-to-test-driven-development-tdd-61a13bc92d92. 
-Although writing tests before the code might seem strange at first, but it has very 
-clear upsides.
+## Integration with ioBroker Residents
 
-The template provides you with basic tests for the adapter startup and package files.
-It is recommended that you add your own tests into the mix.
+The presence states can be linked to the [ioBroker Residents adapter](https://github.com/jpawlowski/ioBroker.residents) via the **Foreign Presence Data Points** field:
 
-### Publishing the adapter
-Using GitHub Actions, you can enable automatic releases on npm whenever you push a new git tag that matches the form 
-`v<major>.<minor>.<patch>`. We **strongly recommend** that you do. The necessary steps are described in `.github/workflows/test-and-release.yml`.
-
-Since you installed the release script, you can create a new
-release simply by calling:
-```bash
-npm run release
 ```
-Additional command line options for the release script are explained in the
-[release-script documentation](https://github.com/AlCalzone/release-script#command-line).
-
-To get your adapter released in ioBroker, please refer to the documentation 
-of [ioBroker.repositories](https://github.com/ioBroker/ioBroker.repositories#requirements-for-adapter-to-get-added-to-the-latest-repository).
-
-### Test the adapter manually with dev-server
-Since you set up `dev-server`, you can use it to run, test and debug your adapter.
-
-You may start `dev-server` by calling from your dev directory:
-```bash
-dev-server watch
+cisco-checkpresence.0.presence.leonie.present
 ```
 
-The ioBroker.admin interface will then be available at http://localhost:undefined/
+## Known Limitations
 
-Please refer to the [`dev-server` documentation](https://github.com/ioBroker/dev-server#command-line) for more details.
+- **Multiple devices per user:** If multiple devices are authenticated with the same 802.1X username, the first client returned by the WLC API is used. This is a use-case limitation, not a bug.
+- **802.1X required:** Devices without 802.1X authentication (e.g. IoT devices using PSK) are not detected. Local EAP on the WLC is sufficient if no external RADIUS server is available.
+- **Central switching only:** Tested with APs in Local Mode with central switching (CAPWAP). Flex/local switching may behave differently.
 
 ## Changelog
-<!--
-    Placeholder for the next version (at the beginning of the line):
-    ### **WORK IN PROGRESS**
--->
 
-### **WORK IN PROGRESS**
-* (M1kad0) initial release
+### 0.0.1 (2026-04-26)
+- Initial release
+- Presence detection via RESTCONF (`common-oper-data`)
+- AP name, radio band, RSSI and SNR via `traffic-stats`
+- Encrypted password storage
+- Dark/light mode admin UI with MUI v6
 
 ## License
+
 MIT License
 
 Copyright (c) 2026 M1kad0 <leonie+iobroker@sgessinger.de>
