@@ -1,8 +1,11 @@
 {
     "802.1X Username": "802.1X 用户名",
+    "Absent threshold": "缺席阈值（民意调查）",
     "Add user": "添加用户",
+    "Connection": "联系",
     "Ignore self-signed certificate": "忽略自签名证书（推荐）",
     "Poll Interval": "轮询间隔（秒）",
+    "Polls until absent": "在标记缺席之前连续进行没有客户的民意调查",
     "Remove": "消除",
     "State Name": "ioBroker 中的状态名称",
     "User Mapping": "用户映射（802.1X 用户名 → 州名）",

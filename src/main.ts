@@ -19,6 +19,7 @@ interface TrafficStats {
 
 class CiscoCheckpresence extends utils.Adapter {
     private pollTimer: ReturnType<typeof setInterval> | null = null;
+    private absentCount: Map<string, number> = new Map();
 
     public constructor(options: Partial<utils.AdapterOptions> = {}) {
         super({
@@ -158,7 +159,20 @@ class CiscoCheckpresence extends utils.Adapter {
                     continue;
                 }
                 const client = enriched.find((c) => c.username === user.username && c.connected);
-                const present = !!client;
+                const absentThreshold = Math.max(1, this.config.absentThreshold || 2);
+
+                let present: boolean;
+                if (client) {
+                    this.absentCount.set(user.stateName, 0);
+                    present = true;
+                } else {
+                    const count = (this.absentCount.get(user.stateName) ?? 0) + 1;
+                    this.absentCount.set(user.stateName, count);
+                    present = count < absentThreshold;
+                    if (!present) {
+                        this.log.debug(`${user.username}: ${count}× nicht gesehen → abwesend`);
+                    }
+                }
 
                 await this.setState(`presence.${user.stateName}.present`, present, true);
                 await this.setState(`presence.${user.stateName}.ap`, client?.ap ?? '', true);

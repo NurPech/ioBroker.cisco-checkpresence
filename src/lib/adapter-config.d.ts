@@ -5,6 +5,7 @@ declare global {
             wlcUser: string;
             wlcPassword: string;
             pollInterval: number;
+            absentThreshold: number;
             ignoreSelfSignedCert: boolean;
             users: Array<{ username: string; stateName: string }>;
         }
