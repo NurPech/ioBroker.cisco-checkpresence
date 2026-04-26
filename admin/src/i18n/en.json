@@ -1,0 +1,14 @@
+{
+    "cisco-checkpresence adapter settings": "Adapter settings for cisco-checkpresence",
+    "Connection": "Connection",
+    "WLC Host": "WLC Host / IP Address",
+    "WLC Username": "Username (802.1X / RESTCONF)",
+    "WLC Password": "Password",
+    "Poll Interval": "Poll interval (seconds)",
+    "Ignore self-signed certificate": "Ignore self-signed certificate (recommended)",
+    "User Mapping": "User mapping (802.1X username → state name)",
+    "802.1X Username": "802.1X Username",
+    "State Name": "State name in ioBroker",
+    "Add user": "Add user",
+    "Remove": "Remove"
+}

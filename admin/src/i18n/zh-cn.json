@@ -1,0 +1,13 @@
+{
+    "802.1X Username": "802.1X 用户名",
+    "Add user": "添加用户",
+    "Ignore self-signed certificate": "忽略自签名证书（推荐）",
+    "Poll Interval": "轮询间隔（秒）",
+    "Remove": "消除",
+    "State Name": "ioBroker 中的状态名称",
+    "User Mapping": "用户映射（802.1X 用户名 → 州名）",
+    "WLC Host": "WLC 主机/IP 地址",
+    "WLC Password": "密码",
+    "WLC Username": "用户名（802.1X/RESTCONF）",
+    "cisco-checkpresence adapter settings": "cisco-checkpresence 的适配器设置"
+}

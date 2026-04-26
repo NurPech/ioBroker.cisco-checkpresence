@@ -1,0 +1,43 @@
+{
+    "cli": true,
+    "target": "directory",
+    "adapterName": "cisco-checkpresence",
+    "title": "Cisco 9800 CheckPresence",
+    "description": "The adapter checks the presence of family members over the Cisco Catalyst 9800 Wireless Controller",
+    "keywords": [
+        "iobroker",
+        "cisco",
+        "9800",
+        "presence"
+    ],
+    "expert": "no",
+    "features": [
+        "adapter"
+    ],
+    "adminFeatures": [],
+    "type": "logic",
+    "startMode": "daemon",
+    "connectionType": "local",
+    "dataSource": "poll",
+    "connectionIndicator": "no",
+    "language": "TypeScript",
+    "nodeVersion": "20",
+    "adminUi": "react",
+    "tools": [
+        "ESLint"
+    ],
+    "eslintConfig": "official",
+    "releaseScript": "yes",
+    "devServer": "local",
+    "indentation": "Space (4)",
+    "quotes": "single",
+    "authorName": "M1kad0",
+    "authorGithub": "NurPech",
+    "authorEmail": "leonie+iobroker@sgessinger.de",
+    "gitRemoteProtocol": "HTTPS",
+    "gitCommit": "no",
+    "defaultBranch": "main",
+    "license": "MIT License",
+    "dependabot": "yes",
+    "creatorVersion": "3.1.2"
+}

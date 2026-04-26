@@ -1,0 +1,13 @@
+{
+    "802.1X Username": "Ім'я користувача 802.1X",
+    "Add user": "Додати користувача",
+    "Ignore self-signed certificate": "Ігнорувати самопідписаний сертифікат (рекомендовано)",
+    "Poll Interval": "Інтервал опитування (секунди)",
+    "Remove": "видалити",
+    "State Name": "Назва стану в ioBroker",
+    "User Mapping": "Відображення користувача (ім’я користувача 802.1X → назва стану)",
+    "WLC Host": "Хост WLC / IP-адреса",
+    "WLC Password": "Пароль",
+    "WLC Username": "Ім'я користувача (802.1X / RESTCONF)",
+    "cisco-checkpresence adapter settings": "Параметри адаптера для cisco-checkpresence"
+}

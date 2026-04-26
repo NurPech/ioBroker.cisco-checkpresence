@@ -1,0 +1,13 @@
+{
+    "802.1X Username": "Nombre de usuario 802.1X",
+    "Add user": "Agregar usuario",
+    "Ignore self-signed certificate": "Ignorar el certificado autofirmado (recomendado)",
+    "Poll Interval": "Intervalo de encuesta (segundos)",
+    "Remove": "Eliminar",
+    "State Name": "Nombre del estado en ioBroker",
+    "User Mapping": "Mapeo de usuarios (nombre de usuario 802.1X → nombre de estado)",
+    "WLC Host": "Anfitrión WLC/Dirección IP",
+    "WLC Password": "Contraseña",
+    "WLC Username": "Nombre de usuario (802.1X / RESTCONF)",
+    "cisco-checkpresence adapter settings": "Configuración del adaptador para cisco-checkpresence"
+}
