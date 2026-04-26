@@ -1,5 +1,5 @@
 import * as utils from '@iobroker/adapter-core';
-import * as https from 'https';
+import * as https from 'node:https';
 
 interface WlcClient {
     username: string;
