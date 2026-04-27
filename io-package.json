@@ -28,19 +28,6 @@
         "pl": "dodany nieobecny próg do wykrywania obecności debeuncji",
         "uk": "доданий відсутній поріг виявлення присутності",
         "zh-cn": "添加缺失阈值以解开存在检测"
-      },
-      "0.0.1": {
-        "en": "initial release",
-        "de": "Erstveröffentlichung",
-        "ru": "Начальная версия",
-        "pt": "lançamento inicial",
-        "nl": "Eerste uitgave",
-        "fr": "Première version",
-        "it": "Versione iniziale",
-        "es": "Versión inicial",
-        "pl": "Pierwsze wydanie",
-        "uk": "Початкова версія",
-        "zh-cn": "首次出版"
       }
     },
     "titleLang": {
