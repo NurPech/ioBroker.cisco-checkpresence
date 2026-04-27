@@ -1,6 +1,6 @@
 {
   "name": "iobroker.cisco-checkpresence",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "The adapter checks the presence of family members over the Cisco Catalyst 9800 Wireless Controller",
   "author": {
     "name": "M1kad0",
