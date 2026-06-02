@@ -75,6 +75,7 @@ cisco-checkpresence.0.presence.leonie.present
 -->
 ### **WORK IN PROGRESS**
 * Chore: Update to node 22
+
 ### 0.0.3 (2026-04-27)
 * (M1kad0) fix npm publishing
 
