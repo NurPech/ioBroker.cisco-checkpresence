@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "cisco-checkpresence",
-    "version": "0.0.3",
+    "version": "0.0.4",
     "news": {
+      "0.0.4": {
+        "en": "Chore: Update to node 22\nChore: Update dependencies\nFixed: Fixed object structure",
+        "de": "Chor: Update auf Knoten 22\nChoreographie:\nBehoben: Fixed Objektstruktur",
+        "ru": "Оригинальное название: Update to Node 22\nОригинальное название: Update Dependencies\nФиксированная: Фиксированная объектная структура",
+        "pt": "Coro: Atualizar para o nó 22\nCoro: Atualizar dependências\nFixo: Estrutura fixa do objeto",
+        "nl": "Chore: Bijwerken naar knooppunt 22\nChore: afhankelijkheden bijwerken\nVast: Vaste objectstructuur",
+        "fr": "Choix : mise à jour du noeud 22\nChoix : Mise à jour des dépendances\nCorrection : Structure de l'objet fixe",
+        "it": "Core: Aggiornamento del nodo 22\nChore: dipendenze di aggiornamento\nFisso: Struttura dell'oggetto fisso",
+        "es": "Corto: Actualización al nodo 22\nCorto: Actualizar las dependencias\nFijo: Estructura de objeto fijo",
+        "pl": "Praca: Aktualizacja do węzła 22\nPraca: Uaktualnianie zależności\nNaprawiono: Naprawiono strukturę obiektu",
+        "uk": "Хор: Оновлення до вершини 22\nЧОР: Оновити залежності\nВиправлено: Виправлено структуру об'єкта",
+        "zh-cn": "任务:更新到节点22\n任务:更新依赖性\n固定:固定物体结构"
+      },
       "0.0.3": {
         "en": "fix npm publishing",
         "de": "npm veröffentlichung",
