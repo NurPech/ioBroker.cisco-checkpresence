@@ -82,7 +82,7 @@ class CiscoCheckpresence extends utils.Adapter {
         common: {
           name: "Presence",
           type: "boolean",
-          role: "indicator.state",
+          role: "indicator",
           read: true,
           write: false,
           def: false
