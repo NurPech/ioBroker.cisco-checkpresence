@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "cisco-checkpresence",
-    "version": "0.0.4",
+    "version": "0.0.5",
     "news": {
+      "0.0.5": {
+        "en": "Fixed: Fixed object structure",
+        "de": "Behoben: Fixed Objektstruktur",
+        "ru": "Фиксированная: Фиксированная объектная структура",
+        "pt": "Fixo: Estrutura fixa do objeto",
+        "nl": "Vast: Vaste objectstructuur",
+        "fr": "Correction : Structure de l'objet fixe",
+        "it": "Fisso: Struttura dell'oggetto fisso",
+        "es": "Fijo: Estructura de objeto fijo",
+        "pl": "Naprawiono: Naprawiono strukturę obiektu",
+        "uk": "Виправлено: Виправлено структуру об'єкта",
+        "zh-cn": "固定:固定物体结构"
+      },
       "0.0.4": {
         "en": "Chore: Update to node 22\nChore: Update dependencies\nFixed: Fixed object structure",
         "de": "Chor: Update auf Knoten 22\nChoreographie:\nBehoben: Fixed Objektstruktur",

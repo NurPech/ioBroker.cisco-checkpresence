@@ -73,7 +73,7 @@ cisco-checkpresence.0.presence.leonie.present
     Placeholder for the next version (at the beginning of the line):
     ### **WORK IN PROGRESS**
 -->
-### **WORK IN PROGRESS**
+### 0.0.5 (2026-06-06)
 * Fixed: Fixed object structure
 
 ### 0.0.4 (2026-06-06)
