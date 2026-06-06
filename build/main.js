@@ -46,6 +46,11 @@ class CiscoCheckpresence extends utils.Adapter {
     if (users.length === 0) {
       this.log.warn("No users configured \u2014 please add at least one user.");
     }
+    await this.setObjectNotExistsAsync(`info`, {
+      type: "folder",
+      common: { name: `info` },
+      native: {}
+    });
     await this.setObjectNotExistsAsync("info.connection", {
       type: "state",
       common: {
@@ -56,6 +61,11 @@ class CiscoCheckpresence extends utils.Adapter {
         write: false,
         def: false
       },
+      native: {}
+    });
+    await this.setObjectNotExistsAsync(`presence`, {
+      type: "folder",
+      common: { name: `presence` },
       native: {}
     });
     for (const user of users) {
@@ -72,7 +82,7 @@ class CiscoCheckpresence extends utils.Adapter {
         common: {
           name: "Presence",
           type: "boolean",
-          role: "indicator.presence",
+          role: "indicator.switch",
           read: true,
           write: false,
           def: false
