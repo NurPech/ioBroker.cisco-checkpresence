@@ -74,28 +74,28 @@ cisco-checkpresence.0.presence.leonie.present
     ### **WORK IN PROGRESS**
 -->
 ### **WORK IN PROGRESS**
-* Fixed: Sanitise user-supplied state names to remove characters forbidden in ioBroker object IDs
-* Fixed: Clamp pollInterval and absentThreshold to sane upper bounds
-* Fixed: Avoid overlapping polls by self-scheduling the poll loop instead of using setInterval
-* Fixed: Use translations for the admin tab labels and poll interval field
-* Fixed: Corrected admin page title
+- Fixed: Sanitise user-supplied state names to remove characters forbidden in ioBroker object IDs
+- Fixed: Clamp pollInterval and absentThreshold to sane upper bounds
+- Fixed: Avoid overlapping polls by self-scheduling the poll loop instead of using setInterval
+- Fixed: Use translations for the admin tab labels and poll interval field
+- Fixed: Corrected admin page title
 
 ### 0.0.6 (2026-06-06)
-* Fixed: Fixed object structure
+- Fixed: Fixed object structure
 
 ### 0.0.5 (2026-06-06)
-* Fixed: Fixed object structure
+- Fixed: Fixed object structure
 
 ### 0.0.4 (2026-06-06)
-* Chore: Update to node 22
-* Chore: Update dependencies
-* Fixed: Fixed object structure
+- Chore: Update to node 22
+- Chore: Update dependencies
+- Fixed: Fixed object structure
 
 ### 0.0.3 (2026-04-27)
-* (M1kad0) fix npm publishing
+- (M1kad0) fix npm publishing
 
 ### 0.0.2 (2026-04-26)
-* (M1kad0) added absent threshold to debounce presence detection
+- (M1kad0) added absent threshold to debounce presence detection
 
 ### 0.0.1 (2026-04-26)
 - Initial release
