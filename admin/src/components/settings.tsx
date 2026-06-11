@@ -73,7 +73,7 @@ class Settings extends React.Component<SettingsProps, SettingsState> {
                         sx={{ width: 280 }}
                     />
                     <TextField
-                        label="Intervall (s)"
+                        label={I18n.t('Poll Interval')}
                         value={native.pollInterval ?? 30}
                         type="number"
                         onChange={(e) => onChange('pollInterval', parseInt(e.target.value) || 30)}
@@ -205,8 +205,8 @@ class Settings extends React.Component<SettingsProps, SettingsState> {
         return (
             <Box>
                 <Tabs value={this.state.tab} onChange={(_e, v) => this.setState({ tab: v })}>
-                    <Tab label="Verbindung" />
-                    <Tab label="Benutzer" />
+                    <Tab label={I18n.t('Connection')} />
+                    <Tab label={I18n.t('User Mapping')} />
                 </Tabs>
                 {this.state.tab === 0 && this.renderConnection()}
                 {this.state.tab === 1 && this.renderUsers()}

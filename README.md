@@ -73,6 +73,13 @@ cisco-checkpresence.0.presence.leonie.present
     Placeholder for the next version (at the beginning of the line):
     ### **WORK IN PROGRESS**
 -->
+### **WORK IN PROGRESS**
+* Fixed: Sanitise user-supplied state names to remove characters forbidden in ioBroker object IDs
+* Fixed: Clamp `pollInterval` and `absentThreshold` to sane upper bounds
+* Fixed: Avoid overlapping polls by self-scheduling the poll loop instead of using `setInterval`
+* Fixed: Use translations for the admin tab labels and poll interval field
+* Fixed: Corrected admin page title
+
 ### 0.0.6 (2026-06-06)
 * Fixed: Fixed object structure
 
