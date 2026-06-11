@@ -75,8 +75,8 @@ cisco-checkpresence.0.presence.leonie.present
 -->
 ### **WORK IN PROGRESS**
 * Fixed: Sanitise user-supplied state names to remove characters forbidden in ioBroker object IDs
-* Fixed: Clamp `pollInterval` and `absentThreshold` to sane upper bounds
-* Fixed: Avoid overlapping polls by self-scheduling the poll loop instead of using `setInterval`
+* Fixed: Clamp 'pollInterval' and 'absentThreshold' to sane upper bounds
+* Fixed: Avoid overlapping polls by self-scheduling the poll loop instead of using 'setInterval'
 * Fixed: Use translations for the admin tab labels and poll interval field
 * Fixed: Corrected admin page title
 
