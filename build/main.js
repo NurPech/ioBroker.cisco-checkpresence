@@ -23,9 +23,13 @@ var __toESM = (mod, isNodeMode, target) => (target = mod != null ? __create(__ge
 ));
 var utils = __toESM(require("@iobroker/adapter-core"));
 var https = __toESM(require("node:https"));
+function sanitizeStateName(name) {
+  return name.trim().replace(/\s+/g, "_").replace(/[\]["'`*,;<>?.(){}\\]/g, "");
+}
 class CiscoCheckpresence extends utils.Adapter {
   pollTimer = void 0;
   absentCount = /* @__PURE__ */ new Map();
+  intervalMs = 3e4;
   constructor(options = {}) {
     super({
       ...options,
@@ -35,6 +39,7 @@ class CiscoCheckpresence extends utils.Adapter {
     this.on("unload", this.onUnload.bind(this));
   }
   async onReady() {
+    var _a;
     if (!this.config.wlcHost || !this.config.wlcUser || !this.config.wlcPassword) {
       this.log.warn(
         "WLC configuration is incomplete. Please provide host, username, and password."
@@ -69,15 +74,16 @@ class CiscoCheckpresence extends utils.Adapter {
       native: {}
     });
     for (const user of users) {
-      if (!user.stateName) {
+      const stateName = sanitizeStateName((_a = user.stateName) != null ? _a : "");
+      if (!stateName) {
         continue;
       }
-      await this.setObjectNotExistsAsync(`presence.${user.stateName}`, {
+      await this.setObjectNotExistsAsync(`presence.${stateName}`, {
         type: "channel",
         common: { name: user.username },
         native: {}
       });
-      await this.setObjectNotExistsAsync(`presence.${user.stateName}.present`, {
+      await this.setObjectNotExistsAsync(`presence.${stateName}.present`, {
         type: "state",
         common: {
           name: "Presence",
@@ -89,7 +95,7 @@ class CiscoCheckpresence extends utils.Adapter {
         },
         native: {}
       });
-      await this.setObjectNotExistsAsync(`presence.${user.stateName}.ap`, {
+      await this.setObjectNotExistsAsync(`presence.${stateName}.ap`, {
         type: "state",
         common: {
           name: "Access Point",
@@ -101,7 +107,7 @@ class CiscoCheckpresence extends utils.Adapter {
         },
         native: {}
       });
-      await this.setObjectNotExistsAsync(`presence.${user.stateName}.band`, {
+      await this.setObjectNotExistsAsync(`presence.${stateName}.band`, {
         type: "state",
         common: {
           name: "Frequency band",
@@ -113,7 +119,7 @@ class CiscoCheckpresence extends utils.Adapter {
         },
         native: {}
       });
-      await this.setObjectNotExistsAsync(`presence.${user.stateName}.rssi`, {
+      await this.setObjectNotExistsAsync(`presence.${stateName}.rssi`, {
         type: "state",
         common: {
           name: "RSSI",
@@ -126,7 +132,7 @@ class CiscoCheckpresence extends utils.Adapter {
         },
         native: {}
       });
-      await this.setObjectNotExistsAsync(`presence.${user.stateName}.snr`, {
+      await this.setObjectNotExistsAsync(`presence.${stateName}.snr`, {
         type: "state",
         common: {
           name: "SNR",
@@ -140,17 +146,14 @@ class CiscoCheckpresence extends utils.Adapter {
         native: {}
       });
     }
-    await this.poll();
-    const intervalMs = Math.max(10, this.config.pollInterval || 30) * 1e3;
-    this.pollTimer = this.setInterval(() => {
-      void this.poll();
-    }, intervalMs);
+    this.intervalMs = Math.min(Math.max(10, this.config.pollInterval || 30), 300) * 1e3;
     this.log.info(
-      `Service started. WLC Host: ${this.config.wlcHost}, Polling Interval: ${intervalMs / 1e3}s`
+      `Service started. WLC Host: ${this.config.wlcHost}, Polling Interval: ${this.intervalMs / 1e3}s`
     );
+    await this.poll();
   }
   async poll() {
-    var _a, _b, _c, _d, _e;
+    var _a, _b, _c, _d, _e, _f;
     try {
       const [clients, stats] = await Promise.all([
         this.fetchClients(),
@@ -167,29 +170,30 @@ class CiscoCheckpresence extends utils.Adapter {
       });
       await this.setState("info.connection", true, true);
       const users = Array.isArray(this.config.users) ? this.config.users : [];
+      const absentThreshold = Math.min(Math.max(1, this.config.absentThreshold || 2), 100);
       for (const user of users) {
-        if (!user.stateName || !user.username) {
+        const stateName = sanitizeStateName((_a = user.stateName) != null ? _a : "");
+        if (!stateName || !user.username) {
           continue;
         }
         const client = enriched.find((c) => c.username === user.username && c.connected);
-        const absentThreshold = Math.max(1, this.config.absentThreshold || 2);
         let present;
         if (client) {
-          this.absentCount.set(user.stateName, 0);
+          this.absentCount.set(stateName, 0);
           present = true;
         } else {
-          const count = ((_a = this.absentCount.get(user.stateName)) != null ? _a : 0) + 1;
-          this.absentCount.set(user.stateName, count);
+          const count = ((_b = this.absentCount.get(stateName)) != null ? _b : 0) + 1;
+          this.absentCount.set(stateName, count);
           present = count < absentThreshold;
           if (!present) {
             this.log.debug(`${user.username}: Not seen ${count}\xD7 \u2192 absent`);
           }
         }
-        await this.setState(`presence.${user.stateName}.present`, present, true);
-        await this.setState(`presence.${user.stateName}.ap`, (_b = client == null ? void 0 : client.ap) != null ? _b : "", true);
-        await this.setState(`presence.${user.stateName}.band`, (_c = client == null ? void 0 : client.band) != null ? _c : "", true);
-        await this.setState(`presence.${user.stateName}.rssi`, (_d = client == null ? void 0 : client.rssi) != null ? _d : 0, true);
-        await this.setState(`presence.${user.stateName}.snr`, (_e = client == null ? void 0 : client.snr) != null ? _e : 0, true);
+        await this.setState(`presence.${stateName}.present`, present, true);
+        await this.setState(`presence.${stateName}.ap`, (_c = client == null ? void 0 : client.ap) != null ? _c : "", true);
+        await this.setState(`presence.${stateName}.band`, (_d = client == null ? void 0 : client.band) != null ? _d : "", true);
+        await this.setState(`presence.${stateName}.rssi`, (_e = client == null ? void 0 : client.rssi) != null ? _e : 0, true);
+        await this.setState(`presence.${stateName}.snr`, (_f = client == null ? void 0 : client.snr) != null ? _f : 0, true);
         this.log.debug(
           `${user.username} \u2192 ${present ? `home (${client == null ? void 0 : client.ap}, ${client == null ? void 0 : client.band}, ${client == null ? void 0 : client.rssi} dBm)` : "away"}`
         );
@@ -197,6 +201,10 @@ class CiscoCheckpresence extends utils.Adapter {
     } catch (err) {
       this.log.error(`Failed to poll WLC: ${err.message}`);
       await this.setState("info.connection", false, true);
+    } finally {
+      this.pollTimer = this.setTimeout(() => {
+        void this.poll();
+      }, this.intervalMs);
     }
   }
   fetchClients() {
@@ -289,7 +297,7 @@ class CiscoCheckpresence extends utils.Adapter {
   }
   onUnload(callback) {
     try {
-      this.clearInterval(this.pollTimer);
+      this.clearTimeout(this.pollTimer);
       this.pollTimer = void 0;
       callback();
     } catch (error) {
