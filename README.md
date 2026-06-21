@@ -73,6 +73,10 @@ cisco-checkpresence.0.presence.leonie.present
     Placeholder for the next version (at the beginning of the line):
     ### **WORK IN PROGRESS**
 -->
+
+### **WORK IN PROGRESS**
+- (ioBroker-Bot) Adapter requires admin >= 7.8.23 now.
+
 ### 0.0.7 (2026-06-11)
 - Fixed: Sanitise user-supplied state names to remove characters forbidden in ioBroker object IDs
 - Fixed: Clamp pollInterval and absentThreshold to sane upper bounds
