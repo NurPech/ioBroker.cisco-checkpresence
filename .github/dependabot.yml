@@ -1,6 +1,8 @@
+# Dependabot will run on day 18 of each month at 01:20 (Europe/Berlin timezone)
 version: 2
 updates:
-  - package-ecosystem: npm
+
+  - package-ecosystem: 'npm'
     directory: '/'
     schedule:
       interval: 'cron'
@@ -13,17 +15,21 @@ updates:
     cooldown:
       default-days: 7
     ignore:
-      - dependency-name: "@mui/material"
-        versions: [ ">=7.0.0" ]
-      - dependency-name: "@mui/icons-material"
-        versions: [ ">=7.0.0" ]
-      - dependency-name: "react-dom"
-        versions: [ ">=19.0.0" ]
-      - dependency-name: "@types/react-dom"
-        versions: [ ">=19.0.0" ]
-      - dependency-name: "@types/node"
+      - dependency-name: '@mui/material'
+        versions:
+          - '>=7.0.0'
+      - dependency-name: '@mui/icons-material'
+        versions:
+          - '>=7.0.0'
+      - dependency-name: 'react-dom'
+        versions:
+          - '>=19.0.0'
+      - dependency-name: '@types/react-dom'
+        versions:
+          - '>=19.0.0'
+      - dependency-name: '@types/node'
         update-types:
-          - version-update:semver-major
+          - 'version-update:semver-major'
 
   - package-ecosystem: 'github-actions'
     directory: '/'
