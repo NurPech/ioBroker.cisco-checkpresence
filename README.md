@@ -108,8 +108,6 @@ cisco-checkpresence.0.presence.leonie.present
 - Encrypted password storage
 - Dark/light mode admin UI with MUI v6
 
-For older entries see [CHANGELOG_OLD.md](CHANGELOG_OLD.md).
-
 [Older changelogs can be found there](CHANGELOG_OLD.md)
 
 ## License
