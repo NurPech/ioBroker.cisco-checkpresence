@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "cisco-checkpresence",
-    "version": "0.0.7",
+    "version": "0.1.0",
     "news": {
+      "0.1.0": {
+        "en": "Adapter requires admin >= 7.8.23 now.\nChanged: admin UI migrated from the deprecated `@iobroker/adapter-react-v5` to `@iobroker/gui-components`",
+        "de": "Der Adapter benötigt jetzt Admin ab Version 7.8.23.\nGeändert: Die Admin-Benutzeroberfläche wurde von der veralteten Bibliothek `@iobroker/adapter-react-v5` auf `@iobroker/gui-components` migriert.",
+        "ru": "Для работы адаптера теперь требуется версия admin >= 7.8.23.\nИзменения: административный интерфейс перенесен с устаревшего `@iobroker/adapter-react-v5` на `@iobroker/gui-components`.",
+        "pt": "O adaptador agora requer o admin versão >= 7.8.23.\nAlteração: a interface administrativa foi migrada do componente obsoleto `@iobroker/adapter-react-v5` para `@iobroker/gui-components`.",
+        "nl": "De adapter vereist nu admin >= 7.8.23.\nGewijzigd: de beheerdersinterface is gemigreerd van de verouderde `@iobroker/adapter-react-v5` naar `@iobroker/gui-components`.",
+        "fr": "L'adaptateur nécessite désormais une version d'administrateur supérieure ou égale à 7.8.23.\nModification : l'interface d'administration a été migrée de `@iobroker/adapter-react-v5` (déprécié) vers `@iobroker/gui-components`.",
+        "it": "L'adattatore ora richiede admin >= 7.8.23.\nModificato: l'interfaccia utente di amministrazione è stata migrata dal deprecato `@iobroker/adapter-react-v5` a `@iobroker/gui-components`",
+        "es": "El adaptador ahora requiere admin >= 7.8.23.\nCambios: la interfaz de administración se migró de la biblioteca obsoleta `@iobroker/adapter-react-v5` a `@iobroker/gui-components`.",
+        "pl": "Adapter wymaga teraz uprawnień administratora >= 7.8.23.\nZmieniono: interfejs użytkownika administratora został przeniesiony z przestarzałego `@iobroker/adapter-react-v5` do `@iobroker/gui-components`",
+        "uk": "Адаптер тепер вимагає адміністратора версії >= 7.8.23.\nЗмінено: інтерфейс адміністратора перенесено з застарілої версії `@iobroker/adapter-react-v5` на `@iobroker/gui-components`",
+        "zh-cn": "适配器现在需要管理员版本 >= 7.8.23。\n已更改：管理界面已从已弃用的 `@iobroker/adapter-react-v5` 迁移到 `@iobroker/gui-components`"
+      },
       "0.0.7": {
         "en": "Fixed: Sanitise user-supplied state names to remove characters forbidden in ioBroker object IDs\nFixed: Clamp pollInterval and absentThreshold to sane upper bounds\nFixed: Avoid overlapping polls by self-scheduling the poll loop instead of using setInterval\nFixed: Use translations for the admin tab labels and poll interval field\nFixed: Corrected admin page title",
         "de": "Behoben: Vom Benutzer eingegebene State-Namen werden bereinigt, um in ioBroker-Objekt-IDs verbotene Zeichen zu entfernen\nBehoben: pollInterval und absentThreshold werden auf sinnvolle Maximalwerte begrenzt\nBehoben: Überlappende Abfragen werden vermieden, indem sich die Poll-Schleife selbst neu plant statt setInterval zu verwenden\nBehoben: Übersetzungen werden für die Tab-Bezeichnungen und das Abfrageintervall-Feld der Admin-Oberfläche verwendet\nBehoben: Falschen Titel der Admin-Seite korrigiert",
