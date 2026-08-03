@@ -60,11 +60,11 @@
         "de": "npm veröffentlichung",
         "ru": "издательский дом npm",
         "pt": "corrigir a publicação do npm",
-        "nl": "fix npm publishing",
+        "nl": "npm-publicatie repareren",
         "fr": "corriger npm publication",
         "it": "correzione npm pubblicazione",
         "es": "corrección npm editorial",
-        "pl": "fix npm publishing",
+        "pl": "Napraw publikowanie w npm",
         "uk": "виправлено npm",
         "zh-cn": "修复 npm 发布"
       },
