@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "cisco-checkpresence",
-    "version": "0.1.0",
+    "version": "0.1.1",
     "news": {
+      "0.1.1": {
+        "en": "Fixed: Reuse a keep-alive HTTPS connection for RESTCONF requests instead of opening a new TLS connection (and WLC auth session) on every poll, which could accumulate DMI sessions and crash the WLC at short poll intervals",
+        "de": "Behoben: Verwenden Sie eine Keep-Alive-HTTPS-Verbindung für RESTCONF-Anfragen, statt bei jeder Umfrage eine neue TLS-Verbindung (und WLC-Auth-Sitzung) zu öffnen.",
+        "ru": "Исправлено: вместо открытия нового соединения TLS (и сеанса аутентификации WLC) при каждом опросе повторно используйте HTTPS-соединение, поддерживающее режим поддержания работоспособности, для запросов RESTCONF. Это может привести к накоплению сеансов DMI и сбою WLC через короткие промежутки времени",
+        "pt": "Corrigido: reutilize uma conexão HTTPS ativa para solicitações RESTCONF em vez de abrir uma nova conexão TLS (e sessão de autenticação WLC) em cada enquete, o que pode acumular sessões DMI e travar a WLC em curtos intervalos",
+        "nl": "Opgelost: Hergebruik een keep-alive HTTPS-verbinding voor RESTCONF-aanvragen in plaats van bij elke peiling een nieuwe TLS-verbinding (en WLC-authenticatiesessie) te openen, waardoor er zich DMI-sessies zouden kunnen ophopen en de WLC met korte tussenpozen van de peilingen zou kunnen crashen",
+        "fr": "Corrigé : Réutilisez une connexion HTTPS permanente pour les requêtes RESTCONF au lieu d'en ouvrir une nouvelle (et une session d'authentification WLC) à chaque sondage, ce qui pouvait cumuler des sessions DMI et planter le WLC à intervalles rapprochés",
+        "it": "Risolto: riutilizza una connessione HTTPS keep-alive per le richieste RESTCONF invece di aprirne una nuova (e WLC auth) a ogni sondaggio, accumulando sessioni DMI e bloccando il WLC a brevi intervalli",
+        "es": "Corregido: Reutilizar una conexión HTTPS activa para las solicitudes RESTCONF en lugar de abrir una nueva conexión TLS (y sesión de autenticación del WLC) en cada sondeo, lo que podía acumular sesiones de DMI y bloquear el WLC en intervalos cortos",
+        "pl": "Naprawiono: Ponowne użycie utrzymującego się połączenia HTTPS dla żądań RESTCONF zamiast otwierać nowe połączenie TLS (i sesję audycji WLC) w każdej ankiecie, co mogłoby gromadzić sesje DMI i zawiesić WLC w krótkich odstępach czasu ankiet",
+        "uk": "Виправлено: Повторне використання HTTPS-з'єднання для запитів RESTCONF замість відкриття нового з'єднання TLS (і сеансу авторизації WLC) на кожному опитуванні, що може накопичувати сеанси DMI та зламати WLC через короткі інтервали опитування",
+        "zh-cn": "已修复：对RESTCONF请求重复使用保持活动状态的HTTPS连接，而不是在每次轮询时打开新的TLS连接（和WLC身份验证会话），这可能会累积DMI会话并使WLC在较短的轮询间隔内崩溃"
+      },
       "0.1.0": {
         "en": "Adapter requires admin >= 7.8.23 now.\nChanged: admin UI migrated from the deprecated `@iobroker/adapter-react-v5` to `@iobroker/gui-components`",
         "de": "Der Adapter benötigt jetzt Admin ab Version 7.8.23.\nGeändert: Die Admin-Benutzeroberfläche wurde von der veralteten Bibliothek `@iobroker/adapter-react-v5` auf `@iobroker/gui-components` migriert.",
@@ -80,19 +93,6 @@
         "pl": "Napraw publikowanie w npm",
         "uk": "виправлено npm",
         "zh-cn": "修复 npm 发布"
-      },
-      "0.0.2": {
-        "en": "added absent threshold to debounce presence detection",
-        "de": "zusätzlich abwesende schwelle, um die präsenzerkennung zu deaktivieren",
-        "ru": "добавление отсутствующего порога для опровержения обнаружения присутствия",
-        "pt": "adicionado limiar ausente para desbancar detecção de presença",
-        "nl": "toegevoegd afwezigheidsdrempel om aanwezigheidsdetectie te debouncen",
-        "fr": "a ajouté un seuil d'absence pour désactiver la détection de la présence",
-        "it": "aggiunta soglia assente al rilevamento della presenza di debounce",
-        "es": "umbral añadido ausente para la detección de la presencia de descaro",
-        "pl": "dodany nieobecny próg do wykrywania obecności debeuncji",
-        "uk": "доданий відсутній поріг виявлення присутності",
-        "zh-cn": "添加缺失阈值以解开存在检测"
       }
     },
     "titleLang": {

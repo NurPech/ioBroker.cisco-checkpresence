@@ -73,7 +73,7 @@ cisco-checkpresence.0.presence.leonie.present
     Placeholder for the next version (at the beginning of the line):
     ### **WORK IN PROGRESS**
 -->
-### **WORK IN PROGRESS**
+### 0.1.1 (2026-09-12)
 - Fixed: Reuse a keep-alive HTTPS connection for RESTCONF requests instead of opening a new TLS connection (and WLC auth session) on every poll, which could accumulate DMI sessions and crash the WLC at short poll intervals
 
 ### 0.1.0 (2026-08-03)

@@ -30,6 +30,7 @@ class CiscoCheckpresence extends utils.Adapter {
   pollTimer = void 0;
   absentCount = /* @__PURE__ */ new Map();
   intervalMs = 3e4;
+  httpsAgent = new https.Agent({ keepAlive: true, maxSockets: 2 });
   constructor(options = {}) {
     super({
       ...options,
@@ -255,7 +256,8 @@ class CiscoCheckpresence extends utils.Adapter {
             Accept: "application/yang-data+json"
           },
           rejectUnauthorized: !this.config.ignoreSelfSignedCert,
-          timeout: 1e4
+          timeout: 1e4,
+          agent: this.httpsAgent
         },
         (res) => {
           let data = "";
@@ -299,6 +301,7 @@ class CiscoCheckpresence extends utils.Adapter {
     try {
       this.clearTimeout(this.pollTimer);
       this.pollTimer = void 0;
+      this.httpsAgent.destroy();
       callback();
     } catch (error) {
       this.log.error(`Error during shutdown: ${error.message}`);
