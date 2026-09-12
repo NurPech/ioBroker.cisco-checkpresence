@@ -33,6 +33,7 @@ class CiscoCheckpresence extends utils.Adapter {
     private pollTimer: ioBroker.Timeout | undefined = undefined;
     private absentCount: Map<string, number> = new Map();
     private intervalMs = 30000;
+    private readonly httpsAgent = new https.Agent({ keepAlive: true, maxSockets: 2 });
 
     public constructor(options: Partial<utils.AdapterOptions> = {}) {
         super({
@@ -266,6 +267,7 @@ class CiscoCheckpresence extends utils.Adapter {
                     },
                     rejectUnauthorized: !this.config.ignoreSelfSignedCert,
                     timeout: 10000,
+                    agent: this.httpsAgent,
                 },
                 (res) => {
                     let data = '';
@@ -311,6 +313,7 @@ class CiscoCheckpresence extends utils.Adapter {
         try {
             this.clearTimeout(this.pollTimer);
             this.pollTimer = undefined;
+            this.httpsAgent.destroy();
 
             callback();
         } catch (error) {
