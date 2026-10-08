@@ -37,7 +37,7 @@
     "@iobroker/dev-server": "^0.8.0",
     "@iobroker/eslint-config": "^2.3.4",
     "globals": "^17.13.0",
-    "@iobroker/testing": "^5.2.2",
+    "@iobroker/testing": "^6.3.0",
     "@mui/icons-material": "^9.0.0",
     "@mui/material": "^9.0.0",
     "@tsconfig/node22": "^22.0.6",
